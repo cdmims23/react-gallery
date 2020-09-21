@@ -24,14 +24,23 @@ const PhotoGallery = (props) => {
                     )
                 }) 
         }
-        return (
-            <div className="photo-container">
-                <h2>{`${props.query || props.match.params.q}`}</h2>
-                <ul>
-                    {photos}
-                </ul>
-            </div>
-        )
+        if(photos.length > 0) {
+            return (
+                <div className="photo-container">
+                    <h2>{`${props.query || props.match.params.q}`}</h2>
+                    <ul>
+                        {photos}
+                    </ul>
+                </div>
+            )
+        } else {
+            return (
+                <div className="photo-container">
+                <h2>{"Sorry, the search didn't return any photos."}</h2>
+            </div> 
+            )
+        }
+
     
 }
 
