@@ -15,10 +15,16 @@ class Search extends Component{
     handleSubmit = (e) => {
         e.preventDefault();
         if(this.state.value) {
-            this.props.searchEvent(this.state.value);
             let path = `search/${this.state.value}`;
+            // Callback to make sure that UI will not update until fetch is complete.
+            this.props.searchEvent(this.state.value, () => {
+                if (this.props.history.location.pathname.includes('/search')) {
+                    this.props.history.push(`/${path}`);
+                  } else {
+                    this.props.history.push(`${path}`);
+                  }
+            });
             this.setState({value: ''});
-            this.props.history.push(path);
         } else {
             console.log('Please enter a query');
         }
@@ -39,4 +45,5 @@ class Search extends Component{
     }
 }
 
+// Using withRouter to get access to the history object.
 export default withRouter(Search);
